@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button";
+import { AuthScreen } from "@/features/auth/components/auth-screen";
 
 export default function Home() {
   return (
-    <div className="h-full bg-red-200">
-      <Button variant="slack">Home</Button>
-    </div>
+    <main className="h-full">
+      <AuthScreen />
+    </main>
   );
 }
