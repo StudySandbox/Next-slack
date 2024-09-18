@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { ConvexAuthNextjsServerProvider } from "@convex-dev/auth/nextjs/server";
-import { ConvexClientProvider } from "@/components/convex-client-provider";
-import "./globals.css";
+
 import { Modals } from "@/components/modals";
+import { Toaster } from "@/components/ui/sonner";
+import { ConvexClientProvider } from "@/components/convex-client-provider";
+
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Next Slack",
@@ -19,6 +22,7 @@ export default function RootLayout({
       <html lang="ko">
         <body>
           <ConvexClientProvider>
+            <Toaster position="top-center" duration={1500} />
             <Modals />
             {children}
           </ConvexClientProvider>
