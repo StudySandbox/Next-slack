@@ -22,7 +22,11 @@ export default function RootLayout({
       <html lang="ko">
         <body>
           <ConvexClientProvider>
-            <Toaster position="top-center" duration={1500} />
+            <Toaster
+              position="top-center"
+              duration={1500}
+              className="bg-white"
+            />
             <Modals />
             {children}
           </ConvexClientProvider>
