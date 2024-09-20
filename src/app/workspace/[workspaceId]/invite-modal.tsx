@@ -7,7 +7,7 @@ import {
   DialogDescription,
   DialogClose,
 } from "@/components/ui/dialog";
-import { useNewJoinCode } from "@/features/workspace/api/use-new-join-code";
+import { useNewJoinCode } from "@/features/workspaces/api/use-new-join-code";
 import { useConfirm } from "@/hooks/use-confirm";
 import { useWorkspaceId } from "@/hooks/use-workspace-id";
 import { CopyIcon, RefreshCcw } from "lucide-react";
