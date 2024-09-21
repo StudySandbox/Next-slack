@@ -11,8 +11,9 @@ import { MdSend } from "react-icons/md";
 import { PiTextAa } from "react-icons/pi";
 import { ImageIcon, Smile } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import { Hint } from "@/components/hint";
+import { Button } from "@/components/ui/button";
+import { EmojiPopover } from "@/components/emoji-popover";
 
 import "quill/dist/quill.snow.css";
 import { cn } from "@/lib/utils";
@@ -147,6 +148,14 @@ const Editor = ({
     }
   };
 
+  // emoji 는 타입을 알 수 없으므로 해당라인 타입검사를 비활성화합니다
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onEmojiSelect = (emoji: any) => {
+    const quill = quillRef.current;
+
+    quill?.insertText(quill?.getSelection()?.index || 0, emoji.native);
+  };
+
   // 에디터에 입력된 값이 있는지 체크
   // quillRef.current.getText()를 사용할 수도 있지만
   // 해당 함수는 상태를 업데이트 하지 않는다.
@@ -172,16 +181,12 @@ const Editor = ({
                 <PiTextAa className="size-4" />
               </Button>
             </Hint>
-            <Hint label="Emoji">
-              <Button
-                disabled={disabled}
-                size="iconSm"
-                variant="ghost"
-                onClick={() => {}}
-              >
+            <EmojiPopover onEmojiSelect={onEmojiSelect}>
+              <Button disabled={disabled} size="iconSm" variant="ghost">
                 <Smile className="size-4" />
               </Button>
-            </Hint>
+            </EmojiPopover>
+
             {variant === "create" && (
               <Hint label="Image">
                 <Button
@@ -231,12 +236,18 @@ const Editor = ({
             )}
           </div>
         </div>
-        <div className="flex justify-end p-2 text-[10px] text-muted-foreground">
-          <p>
-            <strong>Shift + Return</strong>
-            to add a new line
-          </p>
-        </div>
+        {variant === "create" && (
+          <div
+            className={cn(
+              "flex justify-end p-2 text-[10px] text-muted-foreground opacity-0 transition",
+              !isEmpty && "opacity-100",
+            )}
+          >
+            <p>
+              <strong>Shift + Return</strong> to add a new line
+            </p>
+          </div>
+        )}
       </div>
     </>
   );
