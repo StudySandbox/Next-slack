@@ -92,8 +92,16 @@ const Editor = ({
             enter: {
               key: "Enter",
               handler: () => {
-                // TODO Submit form
-                return;
+                const text = quill.getText();
+                const addedImage = imageElementRef.current?.files?.[0] || null;
+
+                const isEmpty =
+                  !addedImage &&
+                  text.replace(/<(.|\n)*?>/g, "").trim().length === 0;
+                if (isEmpty) return;
+
+                const body = JSON.stringify(quill.getContents());
+                submitRef.current?.({ body, image: addedImage });
               },
             },
             shift_enter: {
@@ -164,7 +172,7 @@ const Editor = ({
   // 해당 함수는 상태를 업데이트 하지 않는다.
   // quill editor의 빈값은 <br/><p></p>의 형태로 빈값이지만 빈값이 아니다.
   // 따라서 replace를 이용해 값을 변경해준다.
-  const isEmpty = text.replace(/<(.|\n)*?>/g, "").trim().length === 0;
+  const isEmpty = !image && text.replace(/<(.|\n)*?>/g, "").trim().length === 0;
 
   return (
     <>
@@ -178,7 +186,12 @@ const Editor = ({
           }}
           className="hidden"
         />
-        <div className="flex flex-col overflow-hidden rounded-md border border-slate-200 bg-white transition focus-within:border-slate-300 focus-within:shadow-md">
+        <div
+          className={cn(
+            "flex flex-col overflow-hidden rounded-md border border-slate-200 bg-white transition focus-within:border-slate-300 focus-within:shadow-md",
+            disabled && "opacity-50",
+          )}
+        >
           <div ref={containerRef} className="ql-custom h-full" />
           {!!image && (
             <div className="p-2">
@@ -246,7 +259,12 @@ const Editor = ({
                 </Button>
                 <Button
                   disabled={disabled || isEmpty}
-                  onClick={() => {}}
+                  onClick={() => {
+                    onSubmit({
+                      body: JSON.stringify(quillRef.current?.getContents()),
+                      image,
+                    });
+                  }}
                   size="sm"
                   className="bg-[#007a5a] text-white hover:bg-[#007a5a]/80"
                 >
@@ -257,7 +275,12 @@ const Editor = ({
             {variant === "create" && (
               <Button
                 disabled={disabled || isEmpty}
-                onClick={() => {}}
+                onClick={() => {
+                  onSubmit({
+                    body: JSON.stringify(quillRef.current?.getContents()),
+                    image,
+                  });
+                }}
                 size="iconSm"
                 className={cn(
                   "ml-auto",
