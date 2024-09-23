@@ -1,13 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 
-import {
-  Dialog,
-  DialogHeader,
-  DialogContent,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { XIcon } from "lucide-react";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 interface ThumbnailProps {
   url: string | null | undefined;
