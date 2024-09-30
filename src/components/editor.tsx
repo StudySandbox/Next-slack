@@ -159,12 +159,10 @@ const Editor = ({
     }
   };
 
-  // emoji 는 타입을 알 수 없으므로 해당라인 타입검사를 비활성화합니다
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onEmojiSelect = (emoji: any) => {
+  const onEmojiSelect = (emojiValue: string) => {
     const quill = quillRef.current;
 
-    quill?.insertText(quill?.getSelection()?.index || 0, emoji.native);
+    quill?.insertText(quill?.getSelection()?.index || 0, emojiValue);
   };
 
   // 에디터에 입력된 값이 있는지 체크
