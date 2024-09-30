@@ -127,6 +127,8 @@ export const Profile = ({ memberId, onClose }: ProfileProps) => {
     );
   };
 
+  const isPending = isUpdatingMember || isRemovingMember;
+
   if (isLoadingMember || isLoadingCurrentMember) {
     return (
       <div className="flex h-full flex-col">
@@ -212,14 +214,24 @@ export const Profile = ({ memberId, onClose }: ProfileProps) => {
                   </DropdownMenuRadioGroup>
                 </DropdownMenuContent>
               </DropdownMenu>
-              <Button variant="outline" className="w-full" onClick={onRemove}>
+              <Button
+                variant="outline"
+                className="w-full"
+                onClick={onRemove}
+                disabled={isPending}
+              >
                 Remove
               </Button>
             </div>
           ) : currentMember?._id === memberId &&
             currentMember?.role !== "admin" ? (
             <div className="mt-4">
-              <Button variant="outline" className="w-full" onClick={onLeave}>
+              <Button
+                variant="outline"
+                className="w-full"
+                onClick={onLeave}
+                disabled={isPending}
+              >
                 Leave
               </Button>
             </div>
