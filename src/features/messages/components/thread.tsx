@@ -214,6 +214,7 @@ export const Thread = ({ messageId, onClose }: ThreadProps) => {
                   setEditingId={setEditingId}
                   isCompact={isCompact}
                   hideThreadButton
+                  threadName={message.threadName}
                   threadCount={message.threadCount}
                   threadImage={message.threadImage}
                   threadTimestamp={message.threadTimestamp}
